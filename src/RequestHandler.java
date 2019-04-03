@@ -65,6 +65,7 @@ public class RequestHandler implements Runnable {
         String requestString;
         try{
             requestString = proxyToClientBr.readLine();
+            System.out.println(requestString);
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Error reading request from client");
@@ -84,8 +85,8 @@ public class RequestHandler implements Runnable {
         urlString = urlString.substring(0, urlString.indexOf(' '));
 
         // Prepend http:// if necessary to create correct URL
-        if(!urlString.substring(0,4).equals("http")){
-            String temp = "http:/";
+        if(!urlString.substring(0,4).equals("https")){
+            String temp = "https:/";
             urlString = temp + urlString;
         }
 
@@ -128,7 +129,7 @@ public class RequestHandler implements Runnable {
 
 
             // Trim off http://www. as no need for it in file name
-            fileName = fileName.substring(fileName.indexOf('.')+1);
+            fileName = fileName.substring(fileName.indexOf("//")+1);
 
             // Remove any illegal characters from file name
             fileName = fileName.replace("/", "__");
@@ -185,7 +186,6 @@ public class RequestHandler implements Runnable {
                 proxyToServerCon.setRequestProperty("Content-Type",
                         "application/x-www-form-urlencoded");
                 proxyToServerCon.setRequestProperty("Content-Language", "en-US");
-                proxyToServerCon.setUseCaches(false);
                 proxyToServerCon.setDoOutput(true);
 
                 // Create Buffered Reader from remote Server
