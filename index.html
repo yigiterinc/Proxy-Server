@@ -30,7 +30,10 @@
                 let destination = document.getElementById('URL').value;
                 let address = "http://165.227.167.6:8085";
                 const splitted = destination.split("//");  // in case user enters with http part
-                address += '/' + splitted[1];
+               console.log(splitted)
+		console.log(destination);
+		 address += '/' + destination;
+		console.log(address);
                 this.loadDoc(address);
             }
 
