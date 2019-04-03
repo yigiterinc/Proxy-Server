@@ -6,10 +6,35 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Mutavassıt Sunucu</title> <!-- Turkish for proxy server :d -->
+        <title>Proxy Server</title> <!-- Turkish for proxy server :d -->
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="./style.css" type="text/css"></link>
+
+        <script>
+            function loadDoc(url) {
+              console.log(url)
+              let xhttp;
+              xhttp=new XMLHttpRequest();
+              xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("content").innerHTML =
+                    xhttp.responseText;              
+                }
+              };
+              xhttp.open("GET", url, true);
+              xhttp.send();
+            }
+
+            function getURL() {
+                let destination = document.getElementById('URL').value;
+                let address = "http://165.227.167.6:8085";
+                const splitted = destination.split("//");  // in case user enters with http part
+                address += '/' + splitted[1];
+                this.loadDoc(address);
+            }
+
+        </script>
     </head>
     <body>
         <!--[if lt IE 8]>
@@ -22,17 +47,16 @@
                 <header>
                     <h1 class="label">Enter the URL you would like to visit (<a href="" class="help">help</a>)</h1>
                 </header>
-                <form action="" class="url-input-form">
-                        <input type="text" name="URL" class="url-input">
-                        <input type="submit" value="Submit" class="submit">
-                </form>
+                        <input type="text" class="url-input" id="URL">
+                        <button type="submit" value="submit" 
+                        onclick="getURL();return false" method="GET">Submit</button>
             </div>
         </div>
 
         <div class="container">
             <div></div>
             <div class="grid-item content-panel white-bg">
-                <p>Page content will be here</p>
+                <div id="content"></div>
             </div> 
             <div class="grid2">
                 <div class="logs-box">
